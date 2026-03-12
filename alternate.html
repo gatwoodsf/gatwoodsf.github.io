@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gretchen Atwood — Design Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&family=Poppins:wght@400;600;700;800;900&family=Abril+Fatface&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* =============================================
+       SWITCHER
+    ============================================= */
+    #switcher {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9999;
+      background: rgba(6,6,10,0.97);
+      backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-family: 'Inter', sans-serif;
+    }
+    .sw-label {
+      font-size: .65rem; color: rgba(255,255,255,.3);
+      text-transform: uppercase; letter-spacing: .14em;
+      font-family: 'Fira Code', monospace; margin-right: 10px;
+    }
+    .sw-btn {
+      padding: 5px 16px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: transparent; color: rgba(255,255,255,.5);
+      font-size: .75rem; font-family: 'Inter', sans-serif;
+      font-weight: 500; cursor: pointer; transition: all .2s;
+    }
+    .sw-btn:hover { color: #fff; border-color: rgba(255,255,255,.4); }
+    .sw-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; font-weight: 700; }
+    .design { display: none; }
+    .design.active { display: block; }
+
+    /* =============================================
+       DESIGN 1 — MODERN APPROACHABLE
+       Navy + Mint, sticky sidebar, tab experience
+    ============================================= */
+    #d1 {
+      background: #0a192f; color: #ccd6f6;
+      font-family: 'Inter', sans-serif;
+      padding-top: 44px; min-height: 100vh;
+    }
+    .d1-wrap { display: flex; max-width: 1080px; margin: 0 auto; min-height: calc(100vh - 44px); }
+
+    /* Sidebar */
+    .d1-side {
+      width: 270px; flex-shrink: 0;
+      position: sticky; top: 44px; height: calc(100vh - 44px);
+      padding: 64px 0 40px 40px;
+      display: flex; flex-direction: column;
+    }
+    .d1-name { font-size: 1.9rem; font-weight: 800; color: #e6f1ff; line-height: 1.1; margin-bottom: 8px; }
+    .d1-title { font-size: .88rem; color: #64ffda; font-weight: 500; margin-bottom: 3px; }
+    .d1-loc { font-size: .78rem; color: #8892b0; margin-bottom: 44px; }
+    .d1-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; margin-bottom: auto; }
+    .d1-nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; color: #8892b0; text-decoration: none;
+      font-size: .72rem; font-family: 'Fira Code', monospace;
+      text-transform: uppercase; letter-spacing: .1em; transition: color .2s;
+    }
+    .d1-nav a .line { display: block; height: 1px; width: 24px; background: currentColor; transition: width .25s; }
+    .d1-nav a:hover, .d1-nav a.d1-active { color: #64ffda; }
+    .d1-nav a:hover .line, .d1-nav a.d1-active .line { width: 48px; }
+    .d1-socials { display: flex; gap: 16px; margin-top: 44px; }
+    .d1-socials a { color: #8892b0; transition: color .2s; text-decoration: none; }
+    .d1-socials a:hover { color: #64ffda; }
+    .d1-socials svg { width: 18px; height: 18px; }
+
+    /* Main */
+    .d1-main { flex: 1; padding: 96px 40px 96px 72px; }
+    .d1-sec { margin-bottom: 96px; }
+    .d1-sec-label {
+      font-size: .68rem; font-family: 'Fira Code', monospace;
+      color: #64ffda; text-transform: uppercase; letter-spacing: .13em;
+      margin-bottom: 28px; display: flex; align-items: center; gap: 12px;
+    }
+    .d1-sec-label::after { content: ''; flex: 1; max-width: 220px; height: 1px; background: #1d3a5e; }
+
+    .d1-about { font-size: .94rem; line-height: 1.9; color: #8892b0; max-width: 520px; }
+    .d1-about strong { color: #ccd6f6; }
+
+    /* Tab switcher */
+    .d1-tabs-wrap { display: flex; gap: 0; }
+    .d1-tab-list { display: flex; flex-direction: column; min-width: 132px; border-left: 2px solid #1d3a5e; }
+    .d1-tab {
+      padding: 10px 14px; font-size: .78rem; font-family: 'Fira Code', monospace;
+      color: #8892b0; cursor: pointer; background: none;
+      border: none; border-left: 2px solid transparent; margin-left: -2px;
+      text-align: left; transition: all .2s; white-space: nowrap;
+    }
+    .d1-tab:hover { color: #64ffda; background: rgba(100,255,218,.04); }
+    .d1-tab.active { color: #64ffda; border-left-color: #64ffda; background: rgba(100,255,218,.07); }
+    .d1-tab-panel { display: none; padding: 0 0 0 28px; }
+    .d1-tab-panel.active { display: block; }
+    .d1-job-title { font-size: 1.05rem; font-weight: 600; color: #e6f1ff; margin-bottom: 3px; }
+    .d1-job-title em { font-style: normal; color: #64ffda; }
+    .d1-job-period { font-size: .72rem; font-family: 'Fira Code', monospace; color: #8892b0; margin-bottom: 16px; }
+    .d1-bullets { list-style: none; }
+    .d1-bullets li { position: relative; padding: 4px 0 4px 18px; font-size: .86rem; color: #8892b0; line-height: 1.7; margin-bottom: 4px; }
+    .d1-bullets li::before { content: '▸'; position: absolute; left: 0; color: #64ffda; }
+    .d1-bullets li strong { color: #ccd6f6; }
+
+    /* Skill bars */
+    .d1-skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .d1-skill-group h4 { font-size: .68rem; font-family: 'Fira Code', monospace; color: #64ffda; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 18px; }
+    .d1-bar-wrap { margin-bottom: 13px; }
+    .d1-bar-label { display: flex; justify-content: space-between; font-size: .78rem; color: #8892b0; margin-bottom: 5px; }
+    .d1-bar-label span:last-child { font-family: 'Fira Code', monospace; color: #64ffda; font-size: .68rem; }
+    .d1-bar-track { height: 2px; background: #1d3a5e; border-radius: 2px; overflow: hidden; }
+    .d1-bar-fill { height: 100%; width: 0; background: linear-gradient(90deg, #64ffda, #0ea5e9); border-radius: 2px; transition: width 1.3s cubic-bezier(.4,0,.2,1); }
+
+    /* Edu */
+    .d1-edu-box {
+      border: 1px solid #1d3a5e; border-radius: 6px; padding: 20px 24px;
+      display: inline-block; transition: border-color .2s, box-shadow .2s;
+    }
+    .d1-edu-box:hover { border-color: #64ffda; box-shadow: 0 0 24px rgba(100,255,218,.07); }
+    .d1-edu-box h3 { font-size: .96rem; color: #e6f1ff; margin-bottom: 3px; }
+    .d1-edu-box p { font-size: .82rem; color: #8892b0; }
+    .d1-extras { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .d1-extra { font-size: .82rem; color: #8892b0; display: flex; align-items: flex-start; gap: 10px; }
+    .d1-extra::before { content: '◆'; color: #64ffda; font-size: .55rem; margin-top: 4px; flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+      .d1-wrap { flex-direction: column; }
+      .d1-side { position: static; height: auto; width: 100%; padding: 40px 20px 20px; }
+      .d1-main { padding: 40px 20px; }
+      .d1-skills-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =============================================
+       DESIGN 2 — PLAYFUL
+       Bold color blocks, rotating hero, wavy dividers
+    ============================================= */
+    #d2 { font-family: 'Poppins', sans-serif; background: #FFFEF9; color: #1a1a2e; padding-top: 44px; }
+
+    /* Hero */
+    .d2-hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 80px 24px; position: relative; overflow: hidden;
+    }
+    .d2-blob {
+      position: absolute; border-radius: 50%; filter: blur(70px); opacity: .35;
+      animation: blobPulse 7s ease-in-out infinite alternate; pointer-events: none;
+    }
+    .d2-blob:nth-child(1) { width: 420px; height: 420px; background: #FF6B6B; top: -80px; left: -80px; }
+    .d2-blob:nth-child(2) { width: 320px; height: 320px; background: #FFD93D; bottom: -40px; right: -40px; animation-delay: -2.5s; }
+    .d2-blob:nth-child(3) { width: 260px; height: 260px; background: #4D96FF; top: 38%; left: 55%; animation-delay: -5s; }
+    @keyframes blobPulse { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(28px,18px) scale(1.12); } }
+
+    .d2-pill {
+      display: inline-block; background: #1a1a2e; color: #FFD93D;
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .16em; padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .d2-name {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(3.8rem, 11vw, 8.5rem); line-height: .92;
+      background: linear-gradient(135deg, #FF6B6B 0%, #C77DFF 50%, #4D96FF 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 22px; position: relative; z-index: 1;
+    }
+    .d2-rotate-wrap {
+      height: 2.4rem; overflow: hidden; position: relative; z-index: 1;
+      margin-bottom: 20px;
+    }
+    .d2-rotate-wrap span {
+      display: block; position: absolute; width: 100%; font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 700; opacity: 0; animation: rotWord 20s linear infinite;
+    }
+    .d2-rotate-wrap span:nth-child(1) { animation-delay: 0s;  color: #FF6B6B; }
+    .d2-rotate-wrap span:nth-child(2) { animation-delay: 5s;  color: #C77DFF; }
+    .d2-rotate-wrap span:nth-child(3) { animation-delay: 10s; color: #4D96FF; }
+    .d2-rotate-wrap span:nth-child(4) { animation-delay: 15s; color: #6BCB77; }
+    @keyframes rotWord {
+      0%   { opacity: 0; transform: translateY(22px); }
+      5%   { opacity: 1; transform: translateY(0); }
+      23%  { opacity: 1; transform: translateY(0); }
+      28%  { opacity: 0; transform: translateY(-22px); }
+      100% { opacity: 0; }
+    }
+    .d2-hero-loc { font-size: .88rem; color: #888; margin-bottom: 36px; z-index: 1; position: relative; }
+    .d2-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; z-index: 1; position: relative; }
+    .d2-btn {
+      padding: 13px 28px; border-radius: 50px; font-weight: 700;
+      font-size: .9rem; text-decoration: none; transition: all .22s; display: inline-block;
+    }
+    .d2-btn-dark { background: #1a1a2e; color: #fff; }
+    .d2-btn-dark:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,26,46,.35); }
+    .d2-btn-outline { background: transparent; color: #1a1a2e; border: 2.5px solid #1a1a2e; }
+    .d2-btn-outline:hover { background: #1a1a2e; color: #fff; transform: translateY(-3px); }
+
+    /* Wave */
+    .d2-wave { display: block; width: 100%; }
+
+    /* Colored sections */
+    .d2-sec { padding: 80px 24px; }
+    .d2-sec-inner { max-width: 980px; margin: 0 auto; }
+    .d2-s-about  { background: #FF6B6B; color: #fff; }
+    .d2-s-exp    { background: #FFD93D; color: #1a1a2e; }
+    .d2-s-skills { background: #6BCB77; color: #1a1a2e; }
+    .d2-s-edu    { background: #4D96FF; color: #fff; }
+
+    .d2-sec-title { font-family: 'Abril Fatface', serif; font-size: clamp(2.5rem, 6vw, 4.2rem); margin-bottom: 40px; line-height: 1; }
+
+    /* About */
+    .d2-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .d2-about-text { font-size: .97rem; line-height: 1.85; opacity: .92; }
+    .d2-about-text strong { font-weight: 800; }
+    .d2-hashtags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .d2-hash {
+      background: rgba(255,255,255,.22); border: 2px solid rgba(255,255,255,.45);
+      color: #fff; padding: 5px 13px; border-radius: 20px;
+      font-size: .78rem; font-weight: 700; backdrop-filter: blur(4px);
+    }
+
+    /* Experience cards */
+    .d2-exp-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+    .d2-exp-card {
+      background: #fff; border-radius: 18px; padding: 24px;
+      box-shadow: 6px 6px 0 rgba(0,0,0,.1); transition: transform .22s, box-shadow .22s;
+    }
+    .d2-exp-card:hover { transform: translate(-4px,-4px); box-shadow: 10px 10px 0 rgba(0,0,0,.1); }
+    .d2-card-bar { height: 6px; border-radius: 3px; margin-bottom: 16px; }
+    .d2-card-co { font-weight: 900; font-size: 1.05rem; color: #1a1a2e; margin-bottom: 3px; }
+    .d2-card-role { font-size: .82rem; font-weight: 600; color: #555; margin-bottom: 3px; }
+    .d2-card-period { font-size: .72rem; color: #888; margin-bottom: 12px; }
+    .d2-card-desc { font-size: .8rem; color: #555; line-height: 1.6; margin-bottom: 12px; }
+    .d2-card-badge {
+      display: inline-block; padding: 4px 11px; border-radius: 10px;
+      font-size: .74rem; font-weight: 800;
+    }
+
+    /* Skills — game blocks */
+    .d2-skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+    .d2-skill-card {
+      background: rgba(255,255,255,.52); border-radius: 14px;
+      padding: 16px; backdrop-filter: blur(6px);
+    }
+    .d2-skill-name { font-weight: 700; font-size: .86rem; color: #1a1a2e; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .d2-skill-blocks { display: flex; gap: 3px; }
+    .d2-block { height: 9px; flex: 1; border-radius: 4px; background: rgba(255,255,255,.45); }
+    .d2-block.on { background: #1a1a2e; }
+
+    /* Education */
+    .d2-edu-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 18px; }
+    .d2-edu-card {
+      background: rgba(255,255,255,.16); border: 2px solid rgba(255,255,255,.3);
+      border-radius: 18px; padding: 24px; backdrop-filter: blur(4px);
+    }
+    .d2-edu-card .ico { font-size: 2rem; display: block; margin-bottom: 12px; }
+    .d2-edu-card h3 { font-weight: 800; font-size: .96rem; color: #fff; margin-bottom: 4px; }
+    .d2-edu-card p { font-size: .78rem; color: rgba(255,255,255,.75); }
+
+    @media (max-width: 768px) {
+      .d2-about-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =============================================
+       DESIGN 3 — CORPORATE
+       Near-black, blue accent, counters, glassmorphism
+    ============================================= */
+    #d3 { font-family: 'DM Sans', sans-serif; background: #0d0d0d; color: #fff; padding-top: 44px; }
+
+    /* Sticky glass nav */
+    .d3-nav {
+      position: sticky; top: 44px; z-index: 100;
+      background: rgba(13,13,13,.88); backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex; justify-content: center; gap: 36px; padding: 14px 24px;
+    }
+    .d3-nav a { color: rgba(255,255,255,.4); text-decoration: none; font-size: .8rem; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; transition: color .2s; }
+    .d3-nav a:hover { color: #3b82f6; }
+
+    /* Hero */
+    .d3-hero {
+      min-height: 90vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 80px 24px; position: relative; overflow: hidden;
+    }
+    .d3-glow {
+      position: absolute; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,.13) 0%, transparent 70%);
+      animation: glowDrift 9s ease-in-out infinite alternate; pointer-events: none;
+    }
+    @keyframes glowDrift { 0% { transform: translate(-120px,-80px) scale(1); } 100% { transform: translate(120px,80px) scale(1.18); } }
+
+    .d3-eyebrow { font-size: .7rem; text-transform: uppercase; letter-spacing: .22em; color: #3b82f6; margin-bottom: 20px; font-weight: 600; position: relative; }
+    .d3-hero-name {
+      font-size: clamp(3.2rem, 9.5vw, 8rem); font-weight: 800; letter-spacing: -.03em;
+      line-height: .92; margin-bottom: 28px; position: relative;
+    }
+    .d3-hero-name em { font-style: normal; color: #3b82f6; }
+    .d3-tw-wrap { font-size: 1.05rem; color: rgba(255,255,255,.45); margin-bottom: 56px; min-height: 1.6rem; }
+    .d3-tw { display: inline; border-right: 2px solid #3b82f6; padding-right: 2px; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    /* Stats bar */
+    .d3-stats {
+      display: flex; flex-wrap: wrap;
+      max-width: 760px; margin: 0 auto;
+      border: 1px solid rgba(255,255,255,.07); border-radius: 16px; overflow: hidden;
+    }
+    .d3-stat {
+      flex: 1; min-width: 140px; padding: 30px 20px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.018);
+    }
+    .d3-stat:last-child { border-right: none; }
+    .d3-stat-num {
+      font-size: 2.6rem; font-weight: 800; color: #3b82f6;
+      display: block; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 6px;
+    }
+    .d3-stat-lbl { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.35); font-weight: 500; }
+
+    /* Sections */
+    .d3-sec { max-width: 960px; margin: 0 auto; padding: 96px 24px; border-top: 1px solid rgba(255,255,255,.055); }
+    .d3-sec-hd { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; }
+    .d3-sec-num { font-size: .68rem; font-family: 'Fira Code', monospace; color: #3b82f6; font-weight: 500; }
+    .d3-sec-title { font-size: 1.9rem; font-weight: 700; letter-spacing: -.02em; }
+    .d3-sec-rule { flex: 1; height: 1px; background: rgba(255,255,255,.055); }
+
+    /* Timeline */
+    .d3-tl-item {
+      display: grid; grid-template-columns: 170px 1fr; gap: 36px;
+      padding: 36px 0; border-top: 1px solid rgba(255,255,255,.055);
+    }
+    .d3-tl-item:first-child { border-top: none; }
+    .d3-tl-period { font-size: .73rem; color: rgba(255,255,255,.28); font-weight: 500; margin-bottom: 5px; letter-spacing: .04em; }
+    .d3-tl-co { font-size: .98rem; font-weight: 700; color: rgba(255,255,255,.85); }
+    .d3-tl-role { font-size: 1.08rem; font-weight: 700; color: #fff; margin-bottom: 14px; }
+    .d3-tl-bullets { list-style: none; margin-bottom: 16px; }
+    .d3-tl-bullets li { font-size: .86rem; color: rgba(255,255,255,.48); padding: 4px 0 4px 16px; position: relative; line-height: 1.65; }
+    .d3-tl-bullets li::before { content: '—'; position: absolute; left: 0; color: #3b82f6; font-size: .78rem; }
+    .d3-tl-bullets li strong { color: rgba(255,255,255,.82); }
+    .d3-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+    .d3-pill { background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.24); color: #3b82f6; padding: 3px 11px; border-radius: 20px; font-size: .74rem; font-weight: 600; }
+
+    /* Skills */
+    .d3-skill-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .d3-skill-cat {
+      background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px; padding: 22px; transition: border-color .2s;
+    }
+    .d3-skill-cat:hover { border-color: rgba(59,130,246,.28); }
+    .d3-cat-title { font-size: .66rem; text-transform: uppercase; letter-spacing: .13em; color: #3b82f6; font-weight: 600; margin-bottom: 16px; }
+    .d3-skill-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .d3-skill-list li { font-size: .86rem; color: rgba(255,255,255,.55); display: flex; align-items: center; gap: 8px; }
+    .d3-skill-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #3b82f6; flex-shrink: 0; }
+
+    /* Edu / Cert cards */
+    .d3-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .d3-card {
+      background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px; padding: 26px; transition: border-color .2s, background .2s;
+    }
+    .d3-card:hover { border-color: rgba(59,130,246,.28); background: rgba(59,130,246,.035); }
+    .d3-card-ey { font-size: .66rem; text-transform: uppercase; letter-spacing: .13em; color: #3b82f6; font-weight: 600; margin-bottom: 10px; }
+    .d3-card h3 { font-size: .98rem; font-weight: 700; color: rgba(255,255,255,.88); margin-bottom: 4px; }
+    .d3-card p { font-size: .8rem; color: rgba(255,255,255,.38); }
+    .d3-pub { margin-top: 20px; }
+
+    @media (max-width: 768px) {
+      .d3-tl-item { grid-template-columns: 1fr; gap: 8px; }
+      .d3-skill-cats { grid-template-columns: 1fr; }
+      .d3-card-grid { grid-template-columns: 1fr; }
+      .d3-stats { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SWITCHER -->
+<div id="switcher">
+  <span class="sw-label">Design</span>
+  <button class="sw-btn active"   onclick="show('d1',this)">01 Modern</button>
+  <button class="sw-btn"          onclick="show('d2',this)">02 Playful</button>
+  <button class="sw-btn"          onclick="show('d3',this)">03 Corporate</button>
+</div>
+
+<!-- ===========================================
+     DESIGN 1 — MODERN APPROACHABLE
+=========================================== -->
+<div id="d1" class="design active">
+  <div class="d1-wrap">
+
+    <!-- Sidebar -->
+    <aside class="d1-side">
+      <div class="d1-name">Gretchen<br/>Atwood</div>
+      <div class="d1-title">Research Leader</div>
+      <div class="d1-loc">San Francisco, CA</div>
+      <nav><ul class="d1-nav">
+        <li><a href="#d1-about"  class="d1-active"><span class="line"></span>About</a></li>
+        <li><a href="#d1-exp"   ><span class="line"></span>Experience</a></li>
+        <li><a href="#d1-skills"><span class="line"></span>Skills</a></li>
+        <li><a href="#d1-edu"   ><span class="line"></span>Education</a></li>
+      </ul></nav>
+      <div class="d1-socials">
+        <a href="https://www.linkedin.com/in/gretchenatwood" target="_blank" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://gretchenatwood.net" target="_blank" title="Portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </a>
+        <a href="mailto:gretchenatwood@gmail.com" title="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="d1-main">
+
+      <section id="d1-about" class="d1-sec">
+        <div class="d1-sec-label">01. About</div>
+        <p class="d1-about">Mixed-methods research leader specializing in translating <strong>customer, market, and behavioral insights</strong> into product, business, and sales solutions. Led cross-functional initiatives for <strong>Square, Stripe, Sigma Computing, and Pac-12 Networks</strong> — uncovering new market opportunities, driving product adoption, and shaping business direction across companies and industries. Pursuing opportunities as a <strong>Head of Customer Insights, Principal Research Strategist, or Director of Research & Strategy</strong>.</p>
+      </section>
+
+      <section id="d1-exp" class="d1-sec">
+        <div class="d1-sec-label">02. Experience</div>
+        <div class="d1-tabs-wrap">
+          <div class="d1-tab-list">
+            <button class="d1-tab active" onclick="d1tab(this,'tp0')">Consulting</button>
+            <button class="d1-tab"        onclick="d1tab(this,'tp1')">Sigma</button>
+            <button class="d1-tab"        onclick="d1tab(this,'tp2')">Pac-12</button>
+            <button class="d1-tab"        onclick="d1tab(this,'tp3')">Independent</button>
+            <button class="d1-tab"        onclick="d1tab(this,'tp4')">Yahoo!</button>
+          </div>
+          <div style="flex:1">
+            <div class="d1-tab-panel active" id="tp0">
+              <div class="d1-job-title">Principal Researcher <em>@ Consulting</em></div>
+              <div class="d1-job-period">Aug 2022 — Present · San Francisco, CA</div>
+              <ul class="d1-bullets">
+                <li>Qual/quant research, market analysis &amp; product strategy for <strong>AI, SaaS and Fintech</strong> clients.</li>
+                <li><strong>Square:</strong> Mixed-methods POS study revealing usability gaps; full study delivered in one week.</li>
+                <li><strong>Stripe:</strong> Benchmarked Link digital wallet against 6 US/EU competitors; defined ideal purchase flows.</li>
+                <li><strong>National Safety Council:</strong> Discovered "HR Rick" emerging persona, reshaping messaging strategy.</li>
+                <li><strong>Sagewell Financial:</strong> Uncovered pricing elasticity enabling a <strong>100% price increase</strong> with &lt;10% conversion drop.</li>
+              </ul>
+            </div>
+            <div class="d1-tab-panel" id="tp1">
+              <div class="d1-job-title">Head of Research &amp; Insights <em>@ Sigma Computing</em></div>
+              <div class="d1-job-period">Feb 2020 — Jul 2022 · San Francisco Bay Area</div>
+              <ul class="d1-bullets">
+                <li>Built company research function from zero; designed product-led growth journey for marketing-segment prospects.</li>
+                <li>Drove <strong>500% increase in new trial signups</strong> for target persona.</li>
+                <li>Achieved <strong>40% MOFU conversion rate increase</strong> — a key project success metric.</li>
+                <li>Optimized new user onboarding → <strong>50% more new users became MAU</strong> within 3 months.</li>
+                <li>Recruited and managed a <strong>450-participant user panel</strong> with automated research logistics.</li>
+              </ul>
+            </div>
+            <div class="d1-tab-panel" id="tp2">
+              <div class="d1-job-title">Senior Director, Design &amp; Research <em>@ Pac-12 Networks</em></div>
+              <div class="d1-job-period">Jun 2012 — Sep 2019 · 7 years 4 months</div>
+              <ul class="d1-bullets">
+                <li>Data-driven product strategy → <strong>30% traffic growth &amp; 30% engagement lift</strong> while competitors lost ground to Google.</li>
+                <li>Designed "How to Watch" flows → <strong>10× increase in TV partner traffic</strong>.</li>
+                <li>Increased Pac-12 digital football ticket sales by <strong>15%</strong> across all schools.</li>
+                <li>Reduced content asset creation time by <strong>60%</strong> through social media workflow redesign.</li>
+              </ul>
+            </div>
+            <div class="d1-tab-panel" id="tp3">
+              <div class="d1-job-title">UX Design &amp; Strategy Consultant <em>@ Independent</em></div>
+              <div class="d1-job-period">2008 — 2012 · 4 years</div>
+              <ul class="d1-bullets">
+                <li><strong>Razorfish:</strong> Led UX for Avaya, PG&amp;E (interactive energy savings tool), and Wells Fargo.</li>
+                <li><strong>Odopod:</strong> Large-scale redesign of all Seattle Children's Hospital websites; EV promotion apps.</li>
+                <li><strong>Busse Design:</strong> Prototyped a mobile tax preparation application.</li>
+              </ul>
+            </div>
+            <div class="d1-tab-panel" id="tp4">
+              <div class="d1-job-title">Design Manager <em>@ Yahoo!</em></div>
+              <div class="d1-job-period">Mar 2002 — Jul 2006 · 4 years 5 months</div>
+              <ul class="d1-bullets">
+                <li>Managed Interaction &amp; Visual Design teams across Search, Marketplace, and Media groups.</li>
+                <li>Led ethnographic-research-driven redesign of Yahoo! Travel.</li>
+                <li>Redesigned Yahoo! Fantasy Sports → <strong>$1M+ additional revenue</strong> via upsells in year one.</li>
+                <li>Yahoo! Sports redesign elevated it from #3 to near-ESPN national rankings.</li>
+                <li>Became certified <strong>Scrum Master</strong> during Yahoo's first agile development initiative.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d1-skills" class="d1-sec">
+        <div class="d1-sec-label">03. Skills</div>
+        <div class="d1-skills-grid">
+          <div class="d1-skill-group">
+            <h4>Research Methods</h4>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Qualitative Research</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="98"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Quantitative Research</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="95"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Mixed-Methods</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="98"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Customer Journeys</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="95"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>UX Research</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="94"></div></div></div>
+          </div>
+          <div class="d1-skill-group">
+            <h4>Strategy &amp; Leadership</h4>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Product Strategy</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="92"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Research Leadership</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="96"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Stakeholder Alignment</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="94"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Go-to-Market Enablement</span><span>Advanced</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="88"></div></div></div>
+            <div class="d1-bar-wrap"><div class="d1-bar-label"><span>Executive Storytelling</span><span>Expert</span></div><div class="d1-bar-track"><div class="d1-bar-fill" data-w="97"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="d1-edu" class="d1-sec">
+        <div class="d1-sec-label">04. Education &amp; More</div>
+        <div class="d1-edu-box">
+          <h3>Stanford University</h3>
+          <p>B.A., International Relations</p>
+        </div>
+        <div class="d1-extras">
+          <div class="d1-extra">AI for Customer Research: Future-Proof Your UX &amp; Product Skills</div>
+          <div class="d1-extra">Reimagining Product Leadership in the AI Age</div>
+          <div class="d1-extra">Publication: <em>Lost Champions: Four Men, Two Teams, and the Breaking of Pro Football's Color Line</em></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ===========================================
+     DESIGN 2 — PLAYFUL
+=========================================== -->
+<div id="d2" class="design">
+
+  <!-- Hero -->
+  <div class="d2-hero">
+    <div class="d2-blob"></div>
+    <div class="d2-blob"></div>
+    <div class="d2-blob"></div>
+    <span class="d2-pill">✦ Open to New Opportunities ✦</span>
+    <h1 class="d2-name">Gretchen<br/>Atwood</h1>
+    <div class="d2-rotate-wrap">
+      <span>Research Leader</span>
+      <span>Insight Strategist</span>
+      <span>Product Thinker</span>
+      <span>Storyteller</span>
+    </div>
+    <p class="d2-hero-loc">📍 San Francisco, California</p>
+    <div class="d2-hero-btns">
+      <a href="https://www.linkedin.com/in/gretchenatwood" target="_blank" class="d2-btn d2-btn-dark">LinkedIn Profile</a>
+      <a href="https://gretchenatwood.net" target="_blank" class="d2-btn d2-btn-outline">Portfolio →</a>
+    </div>
+  </div>
+
+  <!-- About -->
+  <svg class="d2-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:#FFFEF9"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FF6B6B"/></svg>
+  <section class="d2-sec d2-s-about">
+    <div class="d2-sec-inner">
+      <h2 class="d2-sec-title">About Me</h2>
+      <div class="d2-about-grid">
+        <p class="d2-about-text">I'm a mixed-methods research leader turning customer truth into business transformation. 20+ years leading research at <strong>Yahoo!, Pac-12 Networks, Sigma Computing</strong> and as consultant to <strong>Square, Stripe, Vanguard, Pinterest</strong> and more — I bridge the gap between what customers feel and what businesses need to grow.</p>
+        <div class="d2-hashtags">
+          <span class="d2-hash">#MixedMethods</span>
+          <span class="d2-hash">#ProductStrategy</span>
+          <span class="d2-hash">#Storytelling</span>
+          <span class="d2-hash">#SaaS</span>
+          <span class="d2-hash">#Fintech</span>
+          <span class="d2-hash">#AI</span>
+          <span class="d2-hash">#Startups</span>
+          <span class="d2-hash">#Enterprise</span>
+          <span class="d2-hash">#Leadership</span>
+          <span class="d2-hash">#ScrumMaster</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <svg class="d2-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:#FF6B6B"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="#FFD93D"/></svg>
+  <section class="d2-sec d2-s-exp">
+    <div class="d2-sec-inner">
+      <h2 class="d2-sec-title">Experience</h2>
+      <div class="d2-exp-cards">
+        <div class="d2-exp-card">
+          <div class="d2-card-bar" style="background:linear-gradient(90deg,#FF6B6B,#FF8E8E)"></div>
+          <div class="d2-card-co">Consulting</div>
+          <div class="d2-card-role">Principal Researcher</div>
+          <div class="d2-card-period">Aug 2022 – Present</div>
+          <p class="d2-card-desc">Square, Stripe, Vanguard, Pinterest, Pega, National Safety Council, Sagewell Financial — qual/quant research, competitive analysis, product strategy.</p>
+          <span class="d2-card-badge" style="background:#FF6B6B22;color:#C0392B">100% price increase enabled ↑</span>
+        </div>
+        <div class="d2-exp-card">
+          <div class="d2-card-bar" style="background:linear-gradient(90deg,#4D96FF,#74B3FF)"></div>
+          <div class="d2-card-co">Sigma Computing</div>
+          <div class="d2-card-role">Head of Research &amp; Insights</div>
+          <div class="d2-card-period">Feb 2020 – Jul 2022</div>
+          <p class="d2-card-desc">Built research practice from zero. Drove product-led growth, managed 450-person panel, optimized onboarding and conversion.</p>
+          <span class="d2-card-badge" style="background:#4D96FF22;color:#1A4FBB">500% trial signup increase ↑</span>
+        </div>
+        <div class="d2-exp-card">
+          <div class="d2-card-bar" style="background:linear-gradient(90deg,#C77DFF,#DA9FFF)"></div>
+          <div class="d2-card-co">Pac-12 Networks</div>
+          <div class="d2-card-role">Sr. Director, Design &amp; Research</div>
+          <div class="d2-card-period">Jun 2012 – Sep 2019</div>
+          <p class="d2-card-desc">7+ years transforming digital fan experiences. Built data-driven product strategy growing traffic while competitors shrank.</p>
+          <span class="d2-card-badge" style="background:#C77DFF22;color:#7B2DBE">30% engagement lift ↑</span>
+        </div>
+        <div class="d2-exp-card">
+          <div class="d2-card-bar" style="background:linear-gradient(90deg,#FF9F43,#FFBE76)"></div>
+          <div class="d2-card-co">Independent Consultant</div>
+          <div class="d2-card-role">UX Design &amp; Strategy</div>
+          <div class="d2-card-period">2008 – 2012</div>
+          <p class="d2-card-desc">Razorfish, Odopod, Busse Design. Healthcare (Seattle Children's Hospital), finance, energy (PG&amp;E), electric vehicles.</p>
+          <span class="d2-card-badge" style="background:#FF9F4322;color:#B35F00">PG&amp;E · Wells Fargo · Avaya</span>
+        </div>
+        <div class="d2-exp-card">
+          <div class="d2-card-bar" style="background:linear-gradient(90deg,#6C5CE7,#A29BFE)"></div>
+          <div class="d2-card-co">Yahoo!</div>
+          <div class="d2-card-role">Design Manager</div>
+          <div class="d2-card-period">Mar 2002 – Jul 2006</div>
+          <p class="d2-card-desc">Led design teams across Search, Marketplace, Travel, News, Health &amp; Sports. Grew Yahoo! Sports to near-ESPN rankings.</p>
+          <span class="d2-card-badge" style="background:#6C5CE722;color:#4527A0">$1M+ Fantasy Sports revenue</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <svg class="d2-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:#FFD93D"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#6BCB77"/></svg>
+  <section class="d2-sec d2-s-skills">
+    <div class="d2-sec-inner">
+      <h2 class="d2-sec-title">Skills</h2>
+      <div class="d2-skills-grid">
+        <div class="d2-skill-card"><div class="d2-skill-name">🔬 Qualitative Research</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">📊 Quantitative Research</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">🎯 Product Strategy</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">🗺️ Customer Journeys</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">📣 Executive Storytelling</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">🤝 Stakeholder Alignment</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">🔍 Market Intelligence</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block"></div></div></div>
+        <div class="d2-skill-card"><div class="d2-skill-name">⚡ Research Operations</div><div class="d2-skill-blocks"><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block on"></div><div class="d2-block"></div><div class="d2-block"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <svg class="d2-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:#6BCB77"><path d="M0,40 C360,0 1080,80 1440,40 L1440,80 L0,80 Z" fill="#4D96FF"/></svg>
+  <section class="d2-sec d2-s-edu">
+    <div class="d2-sec-inner">
+      <h2 class="d2-sec-title">&amp; More</h2>
+      <div class="d2-edu-cards">
+        <div class="d2-edu-card"><span class="ico">🎓</span><h3>Stanford University</h3><p>B.A., International Relations</p></div>
+        <div class="d2-edu-card"><span class="ico">🤖</span><h3>AI for Customer Research</h3><p>Future-Proof Your UX &amp; Product Skills</p></div>
+        <div class="d2-edu-card"><span class="ico">💡</span><h3>Reimagining Product Leadership</h3><p>in the AI Age</p></div>
+        <div class="d2-edu-card"><span class="ico">📖</span><h3>Lost Champions</h3><p>Four Men, Two Teams, and the Breaking of Pro Football's Color Line</p></div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="d2-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" style="background:#4D96FF"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#1a1a2e"/></svg>
+  <footer style="background:#1a1a2e;text-align:center;padding:32px 24px;font-family:'Poppins',sans-serif">
+    <p style="color:rgba(255,255,255,.5);font-size:.82rem">✨ Gretchen Atwood · <a href="mailto:gretchenatwood@gmail.com" style="color:#FFD93D;text-decoration:none">gretchenatwood@gmail.com</a></p>
+  </footer>
+</div>
+
+<!-- ===========================================
+     DESIGN 3 — CORPORATE
+=========================================== -->
+<div id="d3" class="design">
+
+  <!-- Glass nav -->
+  <nav class="d3-nav">
+    <a href="#d3-hero">Home</a>
+    <a href="#d3-exp">Experience</a>
+    <a href="#d3-skills">Skills</a>
+    <a href="#d3-edu">Education</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="d3-hero" id="d3-hero">
+    <div class="d3-glow"></div>
+    <div class="d3-eyebrow">Research Leader · San Francisco, CA</div>
+    <h1 class="d3-hero-name">Gretchen<br/><em>Atwood</em></h1>
+    <div class="d3-tw-wrap"><span class="d3-tw" id="d3tw"></span></div>
+    <div class="d3-stats">
+      <div class="d3-stat"><span class="d3-stat-num" data-t="20" data-s="+">0</span><span class="d3-stat-lbl">Years Experience</span></div>
+      <div class="d3-stat"><span class="d3-stat-num" data-t="500" data-s="%">0</span><span class="d3-stat-lbl">Max Growth Achieved</span></div>
+      <div class="d3-stat"><span class="d3-stat-num" data-p="$" data-t="1" data-s="M+">0</span><span class="d3-stat-lbl">Revenue Impact</span></div>
+      <div class="d3-stat"><span class="d3-stat-num" data-t="10" data-s="x">0</span><span class="d3-stat-lbl">Traffic Multiplied</span></div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="d3-sec" id="d3-exp">
+    <div class="d3-sec-hd"><span class="d3-sec-num">01</span><h2 class="d3-sec-title">Experience</h2><div class="d3-sec-rule"></div></div>
+    <div>
+      <div class="d3-tl-item">
+        <div><div class="d3-tl-period">Aug 2022 — Present</div><div class="d3-tl-co">Consulting</div></div>
+        <div>
+          <div class="d3-tl-role">Principal Researcher</div>
+          <ul class="d3-tl-bullets">
+            <li>Qual/quant research, competitive analysis, and product strategy for <strong>AI, SaaS, and Fintech</strong> clients including Square, Stripe, Vanguard, and Pinterest.</li>
+            <li><strong>Stripe:</strong> Benchmarked Link against 6 US/EU competitors; defined baseline metrics and ideal purchase flows.</li>
+            <li><strong>Sagewell Financial:</strong> Uncovered pricing elasticity enabling a <strong>100% price increase</strong> with &lt;10% conversion drop.</li>
+          </ul>
+          <div class="d3-pills">
+            <span class="d3-pill">Square</span><span class="d3-pill">Stripe</span><span class="d3-pill">Vanguard</span><span class="d3-pill">Pinterest</span><span class="d3-pill">100% Price Increase</span>
+          </div>
+        </div>
+      </div>
+      <div class="d3-tl-item">
+        <div><div class="d3-tl-period">Feb 2020 — Jul 2022</div><div class="d3-tl-co">Sigma Computing</div></div>
+        <div>
+          <div class="d3-tl-role">Head of Research &amp; Insights</div>
+          <ul class="d3-tl-bullets">
+            <li>Built company research practice from zero; designed product-led growth journey for marketing-segment prospects.</li>
+            <li>Optimized new user onboarding → <strong>50% more new users became Monthly Active Users</strong> within 3 months.</li>
+            <li>Recruited and managed a <strong>450-participant user panel</strong>, streamlining research through automation.</li>
+          </ul>
+          <div class="d3-pills">
+            <span class="d3-pill">↑500% Trial Signups</span><span class="d3-pill">↑40% MOFU Conversions</span><span class="d3-pill">↑50% MAU Growth</span><span class="d3-pill">450-Person Panel</span>
+          </div>
+        </div>
+      </div>
+      <div class="d3-tl-item">
+        <div><div class="d3-tl-period">Jun 2012 — Sep 2019</div><div class="d3-tl-co">Pac-12 Networks</div></div>
+        <div>
+          <div class="d3-tl-role">Senior Director, Design &amp; Research, Digital Products</div>
+          <ul class="d3-tl-bullets">
+            <li>Data-driven product strategy grew traffic <strong>30%</strong> while most sports sites lost ground to Google.</li>
+            <li>Designed "How to Watch" flows → <strong>10× increase</strong> in TV provider partner traffic.</li>
+            <li>Reduced content asset creation time by <strong>60%</strong> through social media workflow optimization.</li>
+          </ul>
+          <div class="d3-pills">
+            <span class="d3-pill">↑30% Traffic</span><span class="d3-pill">↑25% App Downloads</span><span class="d3-pill">↑15% Ticket Sales</span><span class="d3-pill">10× TV Partner Traffic</span><span class="d3-pill">60% Faster Assets</span>
+          </div>
+        </div>
+      </div>
+      <div class="d3-tl-item">
+        <div><div class="d3-tl-period">2008 — 2012</div><div class="d3-tl-co">Independent Consultant</div></div>
+        <div>
+          <div class="d3-tl-role">UX Design &amp; Strategy Consultant</div>
+          <ul class="d3-tl-bullets">
+            <li><strong>Razorfish:</strong> Led UX for Avaya, PG&amp;E, and Wells Fargo; created PG&amp;E interactive energy savings experience.</li>
+            <li><strong>Odopod:</strong> Large-scale redesign of Seattle Children's Hospital websites; EV promotion apps.</li>
+          </ul>
+          <div class="d3-pills"><span class="d3-pill">Razorfish</span><span class="d3-pill">Odopod</span><span class="d3-pill">Busse Design</span></div>
+        </div>
+      </div>
+      <div class="d3-tl-item">
+        <div><div class="d3-tl-period">Mar 2002 — Jul 2006</div><div class="d3-tl-co">Yahoo!</div></div>
+        <div>
+          <div class="d3-tl-role">Design Manager</div>
+          <ul class="d3-tl-bullets">
+            <li>Managed Interaction &amp; Visual Design teams across Search, Marketplace, and Media groups.</li>
+            <li>Redesigned Yahoo! Fantasy Sports → <strong>$1M+ additional revenue</strong> via upsells in year one.</li>
+            <li>Yahoo! Sports redesign elevated it from #3 to near-ESPN national rankings. Certified Scrum Master.</li>
+          </ul>
+          <div class="d3-pills"><span class="d3-pill">$1M+ Revenue (Year 1)</span><span class="d3-pill">Yahoo Sports #2 Nationally</span><span class="d3-pill">Certified Scrum Master</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="d3-sec" id="d3-skills">
+    <div class="d3-sec-hd"><span class="d3-sec-num">02</span><h2 class="d3-sec-title">Skills</h2><div class="d3-sec-rule"></div></div>
+    <div class="d3-skill-cats">
+      <div class="d3-skill-cat">
+        <div class="d3-cat-title">Research Methods</div>
+        <ul class="d3-skill-list">
+          <li>Qualitative Research</li><li>Quantitative Research</li><li>Mixed-Methods Research</li>
+          <li>Ethnographic Research</li><li>Customer Journey Mapping</li><li>Usability Testing</li>
+        </ul>
+      </div>
+      <div class="d3-skill-cat">
+        <div class="d3-cat-title">Strategy &amp; Leadership</div>
+        <ul class="d3-skill-list">
+          <li>Product Strategy</li><li>Research Leadership</li><li>Go-to-Market Enablement</li>
+          <li>Research Operations</li><li>Customer Segmentation</li><li>Market Intelligence</li>
+        </ul>
+      </div>
+      <div class="d3-skill-cat">
+        <div class="d3-cat-title">Communication &amp; Tools</div>
+        <ul class="d3-skill-list">
+          <li>Executive Storytelling</li><li>Stakeholder Alignment</li><li>Data Analysis</li>
+          <li>UX Design</li><li>Certified Scrum Master</li><li>Research Automation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="d3-sec" id="d3-edu">
+    <div class="d3-sec-hd"><span class="d3-sec-num">03</span><h2 class="d3-sec-title">Education &amp; Recognition</h2><div class="d3-sec-rule"></div></div>
+    <div class="d3-card-grid">
+      <div class="d3-card"><div class="d3-card-ey">Education</div><h3>Stanford University</h3><p>B.A., International Relations</p></div>
+      <div class="d3-card"><div class="d3-card-ey">Certification</div><h3>AI for Customer Research</h3><p>Future-Proof Your UX &amp; Product Skills</p></div>
+      <div class="d3-card"><div class="d3-card-ey">Certification</div><h3>Reimagining Product Leadership</h3><p>in the AI Age</p></div>
+      <div class="d3-card d3-pub"><div class="d3-card-ey">Publication</div><h3>Lost Champions</h3><p>Four Men, Two Teams, and the Breaking of Pro Football's Color Line</p></div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.055);padding:40px 24px;text-align:center">
+    <p style="font-size:.8rem;color:rgba(255,255,255,.28)">Gretchen Atwood · <a href="mailto:gretchenatwood@gmail.com" style="color:#3b82f6;text-decoration:none">gretchenatwood@gmail.com</a> · <a href="https://www.linkedin.com/in/gretchenatwood" style="color:#3b82f6;text-decoration:none" target="_blank">LinkedIn</a> · <a href="https://gretchenatwood.net" style="color:#3b82f6;text-decoration:none" target="_blank">Portfolio</a></p>
+  </footer>
+
+</div>
+
+<script>
+  /* ── SWITCHER ── */
+  function show(id, btn) {
+    document.querySelectorAll('.design').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 'd1') runD1();
+    if (id === 'd3') runD3();
+  }
+
+  /* ── D1: Tab switch ── */
+  function d1tab(btn, panelId) {
+    document.querySelectorAll('.d1-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.d1-tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  /* ── D1: Animate skill bars ── */
+  function runD1() {
+    const bars = document.querySelectorAll('#d1 .d1-bar-fill');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.width = e.target.dataset.w + '%'; obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    bars.forEach(b => { b.style.width = '0'; obs.observe(b); });
+
+    /* Nav highlight */
+    const secs = document.querySelectorAll('#d1 .d1-sec');
+    const links = document.querySelectorAll('#d1 .d1-nav a');
+    const navObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) links.forEach(a => a.classList.toggle('d1-active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    secs.forEach(s => navObs.observe(s));
+  }
+
+  /* ── D3: Typewriter ── */
+  const twPhrases = ['Head of Customer Insights','Principal Research Strategist','Director of Research & Strategy','Mixed-Methods Research Leader'];
+  let twIdx = 0, twChar = 0, twDel = false, twTimer = null;
+
+  function twTick() {
+    const el = document.getElementById('d3tw');
+    if (!el) return;
+    const phrase = twPhrases[twIdx];
+    if (!twDel) {
+      el.textContent = phrase.slice(0, ++twChar);
+      if (twChar === phrase.length) { twDel = true; twTimer = setTimeout(twTick, 1800); return; }
+    } else {
+      el.textContent = phrase.slice(0, --twChar);
+      if (twChar === 0) { twDel = false; twIdx = (twIdx + 1) % twPhrases.length; }
+    }
+    twTimer = setTimeout(twTick, twDel ? 38 : 68);
+  }
+
+  /* ── D3: Animated counters ── */
+  function animCount(el, target, prefix, suffix, dur) {
+    let start = null;
+    (function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const v = 1 - Math.pow(1 - p, 3);
+      el.textContent = (prefix || '') + Math.floor(v * target) + (suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+    })(performance.now());
+  }
+
+  function runD3() {
+    clearTimeout(twTimer); twIdx = 0; twChar = 0; twDel = false;
+    setTimeout(twTick, 500);
+
+    const nums = document.querySelectorAll('#d3 .d3-stat-num');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          animCount(el, +el.dataset.t, el.dataset.p || '', el.dataset.s || '', 1500);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(n => obs.observe(n));
+  }
+
+  /* ── INIT ── */
+  runD1();
+</script>
+</body>
+</html>
