@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gretchen Atwood — Research Leader</title>
+  <style>
+    :root {
+      --dark: #1e2d3d;
+      --mid: #2e4057;
+      --accent: #4ecdc4;
+      --accent2: #f7b731;
+      --light: #f5f7fa;
+      --text: #2d3748;
+      --muted: #718096;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--mid) 100%);
+      color: var(--white);
+      padding: 64px 32px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(78,205,196,.12);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(247,183,49,.08);
+    }
+    .hero-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem; font-weight: 700; color: var(--dark);
+      margin: 0 auto 24px;
+      box-shadow: 0 0 0 6px rgba(78,205,196,.25);
+    }
+    .hero h1 { font-size: 2.6rem; font-weight: 700; margin-bottom: 10px; }
+    .hero .tagline {
+      font-size: 1.05rem; color: var(--accent);
+      max-width: 640px; margin: 0 auto 20px;
+      font-weight: 500;
+    }
+    .hero .location { font-size: .9rem; color: rgba(255,255,255,.6); margin-bottom: 28px; }
+    .hero-links {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+    }
+    .hero-links a {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.1);
+      color: var(--white);
+      padding: 8px 18px;
+      border-radius: 24px;
+      text-decoration: none;
+      font-size: .85rem;
+      border: 1px solid rgba(255,255,255,.2);
+      transition: background .2s;
+    }
+    .hero-links a:hover { background: rgba(255,255,255,.2); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+      padding: 48px 0;
+    }
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      margin-bottom: 24px;
+    }
+
+    /* ── SUMMARY ── */
+    .summary-text {
+      font-size: .97rem;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .skill-tag {
+      background: var(--light);
+      border: 1.5px solid var(--accent);
+      color: var(--dark);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: .82rem;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .skill-tag:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .skill-tag.core {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 8px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), rgba(78,205,196,.1));
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 36px;
+      animation: fadeUp .5s ease both;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -24px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 3px var(--accent);
+    }
+    .tl-company {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .tl-role {
+      font-size: .95rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .tl-period {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .tl-bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .tl-bullets li {
+      font-size: .88rem;
+      color: var(--text);
+      padding: 4px 0 4px 14px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .tl-bullets li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── METRICS ── */
+    .metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric {
+      background: linear-gradient(135deg, var(--dark), var(--mid));
+      color: var(--white);
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-align: center;
+      min-width: 110px;
+      flex: 1;
+    }
+    .metric .num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    .metric .label {
+      font-size: .72rem;
+      opacity: .8;
+      line-height: 1.3;
+    }
+
+    /* ── CLIENTS ── */
+    .clients-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .client-badge {
+      background: rgba(78,205,196,.1);
+      border: 1px solid rgba(78,205,196,.3);
+      color: var(--dark);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 600;
+    }
+
+    /* ── CERTS / PUB ── */
+    .cert-item, .pub-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .cert-icon, .pub-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .cert-icon { background: rgba(78,205,196,.15); }
+    .pub-icon { background: rgba(247,183,49,.15); }
+    .cert-item p, .pub-item p {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .cert-item span, .pub-item span {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ── EDU ── */
+    .edu-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .edu-logo {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #8b1a1a, #c0392b);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .edu-info h3 { font-size: 1rem; font-weight: 700; color: var(--dark); }
+    .edu-info p  { font-size: .85rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 24px;
+      font-size: .82rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-avatar">GA</div>
+  <h1>Gretchen Atwood</h1>
+  <p class="tagline">Research Leader · Customer Insights · Product Strategy · Mixed-Methods</p>
+  <p class="location">San Francisco, California</p>
+  <div class="hero-links">
+    <a href="https://www.linkedin.com/in/gretchenatwood" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://gretchenatwood.net" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      Portfolio
+    </a>
+    <a href="mailto:gretchenatwood@gmail.com">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email
+    </a>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- Summary -->
+      <div class="card">
+        <p class="section-title">About</p>
+        <p class="summary-text">
+          Mixed-methods research leader specializing in translating customer, market, and behavioral
+          information into product, business, and sales solutions. I've led cross-functional initiatives
+          for Square, Stripe, Sigma Computing, and Pac-12 Networks — uncovering new market opportunities,
+          driving product adoption, and shaping business direction.
+        </p>
+      </div>
+
+      <!-- Top Skills -->
+      <div class="card">
+        <p class="section-title">Skills</p>
+        <div class="skills-grid">
+          <span class="skill-tag core">Qualitative Research</span>
+          <span class="skill-tag core">Quantitative Research</span>
+          <span class="skill-tag core">Product Strategy</span>
+          <span class="skill-tag">Mixed-Methods Research</span>
+          <span class="skill-tag">Customer Segmentation</span>
+          <span class="skill-tag">Market Intelligence</span>
+          <span class="skill-tag">Research Operations</span>
+          <span class="skill-tag">User Experience</span>
+          <span class="skill-tag">Stakeholder Alignment</span>
+          <span class="skill-tag">Go-to-Market Enablement</span>
+          <span class="skill-tag">Data Analysis</span>
+          <span class="skill-tag">Customer Journeys</span>
+          <span class="skill-tag">Storytelling</span>
+          <span class="skill-tag">Research Leadership</span>
+          <span class="skill-tag">Executive Communication</span>
+          <span class="skill-tag">Scrum Master</span>
+          <span class="skill-tag">SaaS</span>
+          <span class="skill-tag">Fintech</span>
+          <span class="skill-tag">AI</span>
+          <span class="skill-tag">Startups &amp; Enterprise</span>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card">
+        <p class="section-title">Education</p>
+        <div class="edu-item">
+          <div class="edu-logo">S</div>
+          <div class="edu-info">
+            <h3>Stanford University</h3>
+            <p>B.A., International Relations</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="card">
+        <p class="section-title">Certifications</p>
+        <div class="cert-item">
+          <div class="cert-icon">🎓</div>
+          <div>
+            <p>AI for Customer Research</p>
+            <span>Future-Proof Your UX &amp; Product Skills</span>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">🎓</div>
+          <div>
+            <p>Reimagining Product Leadership</p>
+            <span>in the AI Age</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Publications -->
+      <div class="card">
+        <p class="section-title">Publications</p>
+        <div class="pub-item">
+          <div class="pub-icon">📖</div>
+          <div>
+            <p>Lost Champions</p>
+            <span>Four Men, Two Teams, and the Breaking of Pro Football's Color Line</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- RIGHT COLUMN: Experience Timeline -->
+    <div>
+      <div class="card">
+        <p class="section-title">Experience</p>
+        <div class="timeline">
+
+          <!-- Consulting -->
+          <div class="tl-item">
+            <div class="tl-company">Consulting</div>
+            <div class="tl-role">Principal Researcher</div>
+            <div class="tl-period">Aug 2022 – Present · 3 yrs 8 mos · San Francisco, CA</div>
+            <div class="clients-row">
+              <span class="client-badge">Square</span>
+              <span class="client-badge">Stripe</span>
+              <span class="client-badge">Vanguard</span>
+              <span class="client-badge">Pinterest</span>
+              <span class="client-badge">Pega</span>
+              <span class="client-badge">Nat'l Safety Council</span>
+              <span class="client-badge">Sagewell Financial</span>
+            </div>
+            <ul class="tl-bullets" style="margin-top:12px">
+              <li>Mixed-methods research, market &amp; competitive analysis, product strategy, and UX optimization across AI, SaaS, and Fintech clients.</li>
+              <li><strong>Square</strong> — Revealed how businesses use handheld POS systems; identified key usability gaps and delivered prioritized recommendations under a tight one-week deadline.</li>
+              <li><strong>Stripe</strong> — Large-scale qual &amp; quant benchmarking study for Link (digital wallet) against 6 major US/EU competitors; defined ideal purchase flows across device/wallet combinations.</li>
+              <li><strong>National Safety Council</strong> — Discovered "HR Rick," an emerging HR decision-maker persona; reshaped messaging, outreach, and service strategy.</li>
+              <li><strong>Sagewell Financial</strong> — Uncovered pricing elasticity enabling a 100% price increase with &lt;10% drop in conversions.</li>
+            </ul>
+          </div>
+
+          <!-- Sigma Computing -->
+          <div class="tl-item">
+            <div class="tl-company">Sigma Computing</div>
+            <div class="tl-role">Head of Research &amp; Insights</div>
+            <div class="tl-period">Feb 2020 – Jul 2022 · 2 yrs 6 mos · San Francisco Bay Area</div>
+            <ul class="tl-bullets">
+              <li>Built and led the company's research function from the ground up.</li>
+              <li>Designed a product-led growth journey for marketing-segment prospects.</li>
+              <li>Developed ideal customer profile framework defining three priority segments.</li>
+              <li>Established a 450-participant user panel, streamlining logistics through automation.</li>
+              <li>Iterative design &amp; testing upgraded major components: Workbooks, Visualizations, Lookups.</li>
+            </ul>
+            <div class="metrics-row">
+              <div class="metric"><span class="num">500%</span><span class="label">increase in trial signups</span></div>
+              <div class="metric"><span class="num">40%</span><span class="label">MOFU conversion increase</span></div>
+              <div class="metric"><span class="num">50%</span><span class="label">more new users → MAU</span></div>
+              <div class="metric"><span class="num">450</span><span class="label">user panel members</span></div>
+            </div>
+          </div>
+
+          <!-- Pac-12 Networks -->
+          <div class="tl-item">
+            <div class="tl-company">Pac-12 Networks</div>
+            <div class="tl-role">Senior Director, Design &amp; Research, Digital Products</div>
+            <div class="tl-period">Jun 2012 – Sep 2019 · 7 yrs 4 mos</div>
+            <ul class="tl-bullets">
+              <li>Developed data-driven product strategy focused on events, teams, and video — growing traffic at a time when most sports sites were losing ground to Google.</li>
+              <li>Transformed Pac-12's digital platforms into dynamic fan hubs amplifying viewership and attracting new partnerships.</li>
+              <li>Designed "How to Watch" flows driving a 10× increase in traffic to TV provider partners.</li>
+              <li>Redesigned website, apps, streaming platform, and social media strategy; reduced asset creation time by 60%.</li>
+              <li>Weekly research insights meetings became the President's most valuable meeting of the week.</li>
+            </ul>
+            <div class="metrics-row">
+              <div class="metric"><span class="num">30%</span><span class="label">traffic increase</span></div>
+              <div class="metric"><span class="num">25%</span><span class="label">app download growth</span></div>
+              <div class="metric"><span class="num">15%</span><span class="label">football ticket sales lift</span></div>
+              <div class="metric"><span class="num">10×</span><span class="label">TV partner traffic</span></div>
+            </div>
+          </div>
+
+          <!-- Independent Consultant -->
+          <div class="tl-item">
+            <div class="tl-company">Independent Consultant</div>
+            <div class="tl-role">UX Design &amp; Strategy Consultant</div>
+            <div class="tl-period">2008 – 2012 · 4 yrs</div>
+            <div class="clients-row">
+              <span class="client-badge">Razorfish</span>
+              <span class="client-badge">Odopod</span>
+              <span class="client-badge">Busse Design</span>
+            </div>
+            <ul class="tl-bullets" style="margin-top:12px">
+              <li>Led UX design for Avaya, PG&amp;E, and Wells Fargo at Razorfish; created interactive house experience showing energy savings.</li>
+              <li>Led large-scale redesign of all Seattle Children's Hospital websites.</li>
+              <li>Developed apps promoting electric vehicles and prototyped a mobile tax prep app.</li>
+            </ul>
+          </div>
+
+          <!-- Yahoo! -->
+          <div class="tl-item">
+            <div class="tl-company">Yahoo!</div>
+            <div class="tl-role">Design Manager</div>
+            <div class="tl-period">Mar 2002 – Jul 2006 · 4 yrs 5 mos</div>
+            <ul class="tl-bullets">
+              <li>Managed teams of Interaction and Visual Designers across Search, Marketplace, and Media groups.</li>
+              <li>Led ethnographic-research-driven redesign of Yahoo! Travel.</li>
+              <li>Integrated Farechase airfare widget into site-wide search results — highest user testing scores in 10+ years.</li>
+              <li>Led major redesigns of Yahoo! News, Yahoo! Health, and Yahoo! Sports (rose from #3 to near-ESPN levels).</li>
+              <li>Redesigned Yahoo! Fantasy Sports — combined products generated $1M+ additional revenue in year one via upsells.</li>
+              <li>Became a certified Scrum Master during Yahoo's first agile development initiative.</li>
+            </ul>
+            <div class="metrics-row">
+              <div class="metric"><span class="num">$1M+</span><span class="label">Fantasy Sports upsell revenue</span></div>
+              <div class="metric"><span class="num">#2</span><span class="label">Yahoo! Sports ranking (up from #3)</span></div>
+            </div>
+          </div>
+
+        </div><!-- /timeline -->
+      </div>
+    </div><!-- /right -->
+
+  </div><!-- /two-col -->
+</div><!-- /container -->
+
+<footer>
+  <p>Gretchen Atwood · San Francisco, CA ·
+    <a href="https://www.linkedin.com/in/gretchenatwood">LinkedIn</a> ·
+    <a href="https://gretchenatwood.net">gretchenatwood.net</a>
+  </p>
+</footer>
+
+</body>
+</html>
